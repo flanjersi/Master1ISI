@@ -8,8 +8,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import static java.util.jar.Pack200.Packer.PASS;
-
 public class DatabaseManager {
 
     private DataSource dataSource;
