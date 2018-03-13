@@ -1,6 +1,7 @@
 package fr.master1ISI;
 
 import fr.master1ISI.databaseManager.DatabaseManager;
+import fr.master1ISI.wrapper.WrapperCSVS3;
 import fr.master1ISI.wrapper.WrapperCSVS4;
 import fr.master1ISI.wrapper.WrapperCSVS5;
 import fr.master1ISI.wrapper.WrapperCSVS5N2;
@@ -26,6 +27,9 @@ public class App {
         ThreadWrapper threadS4 = new ThreadWrapper(new WrapperCSVS4(), databaseManager,
                 "ressources/source4/clean_data.csv");
 
+        ThreadWrapper threadS3 = new ThreadWrapper(new WrapperCSVS3(), databaseManager,
+                "ressources/source3/police_killings.csv");
+
 
         try {
             logger.info("PARSE S5");
@@ -35,12 +39,17 @@ public class App {
             threadS5N2.start();
 
             logger.info("PARSE S4");
-            threadS4.start();
+            //threadS4.start();
+
+            logger.info("PARSE S3");
+            threadS3.start();
+
             logger.info("ATTENTE FIN PARSE");
 
             threadS5.join();
             threadS4.join();
             threadS5N2.join();
+            threadS3.join();
 
             logger.info("FIN PROGRAMME");
         } catch (InterruptedException e) {

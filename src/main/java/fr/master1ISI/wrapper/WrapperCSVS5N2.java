@@ -30,6 +30,7 @@ public class WrapperCSVS5N2 extends WrapperCSV {
         String[] nextLine;
 
         try {
+
             while ((nextLine = csvReader.readNext()) != null) {
                 int size = nextLine.length;
 
