@@ -5,7 +5,6 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseManager {
@@ -21,13 +20,13 @@ public class DatabaseManager {
         this.password = password;
         this.username = username;
         this.database = database;
-        //init(username, password, database);
+        init(username, password, database);
     }
 
     private void init(String username, String password, String database) {
         HikariConfig config = new HikariConfig();
 
-        config.setJdbcUrl("jdbc:mysql://localhost:3306/" + database);
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/" + database + "?autoReconnect=true&useSSL=false");
         config.setUsername(username);
         config.setPassword(password);
         config.setMaximumPoolSize(20);
@@ -41,14 +40,7 @@ public class DatabaseManager {
 
 
     public synchronized Connection getConnection() throws SQLException {
-        try {
-            Class.forName("org.hsqldb.jdbcDriver").newInstance();
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/" + database, username, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        //return dataSource.getConnection();
+        return dataSource.getConnection();
     }
 
     /*

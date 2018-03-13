@@ -1,16 +1,14 @@
 package fr.master1ISI.wrapper;
 
-import fr.master1ISI.App;
-
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class WrapperCSVS5 extends WrapperCSV {
+public class WrapperCSVS5N2 extends WrapperCSV {
 
-    public WrapperCSVS5() {
-        super(',', true, "MURDER_2015_FINAL");
+    public WrapperCSVS5N2() {
+        super(',', true, "MURDER_2016_PRELIM");
     }
 
     protected void createTable() throws SQLException {
@@ -19,8 +17,8 @@ public class WrapperCSVS5 extends WrapperCSV {
         statement.execute("CREATE TABLE IF NOT EXISTS " + nameTable + " (" +
                 "city VARCHAR (256) NOT NULL , " +
                 "state VARCHAR (256) NOT NULL, " +
-                "2014_murders int NOT NULL, " +
                 "2015_murders int NOT NULL, " +
+                "2016_murders int NOT NULL, " +
                 "difference_murders int NOT NULL, " +
                 "CONSTRAINT PK_" + nameTable + " PRIMARY KEY (city) " +
                 ") ");
@@ -44,19 +42,20 @@ public class WrapperCSVS5 extends WrapperCSV {
 
                 String city = nextLine[0];
                 String state = nextLine[1];
-                int murders2014 = Integer.valueOf(nextLine[2]);
-                int murders2015 = Integer.valueOf(nextLine[3]);
+                int murders2015 = Integer.valueOf(nextLine[2]);
+                int murders2016 = Integer.valueOf(nextLine[3]);
                 int change = Integer.valueOf(nextLine[4]);
 
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO " + nameTable + "(city, state, 2014_murders, 2015_murders, difference_murders) VALUES (?, ?, ?, ?, ?)");
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO " + nameTable + "(city, state, 2015_murders, 2016_murders, difference_murders) VALUES (?, ?, ?, ?, ?)");
                 statement.setString(1, city);
                 statement.setString(2, state);
-                statement.setInt(3, murders2014);
-                statement.setInt(4, murders2015);
+                statement.setInt(3, murders2015);
+                statement.setInt(4, murders2016);
                 statement.setInt(5, change);
 
                 statement.execute();
                 statement.close();
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
