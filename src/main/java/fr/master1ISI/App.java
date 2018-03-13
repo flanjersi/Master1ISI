@@ -1,10 +1,8 @@
 package fr.master1ISI;
 
 import fr.master1ISI.databaseManager.DatabaseManager;
-import fr.master1ISI.wrapper.WrapperCSVS3;
-import fr.master1ISI.wrapper.WrapperCSVS4;
-import fr.master1ISI.wrapper.WrapperCSVS5;
-import fr.master1ISI.wrapper.WrapperCSVS5N2;
+import fr.master1ISI.wrapper.*;
+
 import java.util.logging.Logger;
 
 public class App {
@@ -30,6 +28,8 @@ public class App {
         ThreadWrapper threadS3 = new ThreadWrapper(new WrapperCSVS3(), databaseManager,
                 "ressources/source3/police_killings.csv");
 
+        ThreadWrapper threadS2 = new ThreadWrapper(new WrapperCSVS2(), databaseManager,
+                "ressources/source2/hates_crimes.csv");
 
         try {
             logger.info("PARSE S5");
@@ -39,10 +39,14 @@ public class App {
             threadS5N2.start();
 
             logger.info("PARSE S4");
-            //threadS4.start();
+            threadS4.start();
 
             logger.info("PARSE S3");
             threadS3.start();
+
+            logger.info("PARSE S2");
+            threadS2.start();
+
 
             logger.info("ATTENTE FIN PARSE");
 
@@ -50,6 +54,7 @@ public class App {
             threadS4.join();
             threadS5N2.join();
             threadS3.join();
+            threadS2.join();
 
             logger.info("FIN PROGRAMME");
         } catch (InterruptedException e) {
