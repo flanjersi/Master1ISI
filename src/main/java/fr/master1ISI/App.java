@@ -58,6 +58,8 @@ public class App extends Application{
 
     private void initDB() {
         databaseManager = new DatabaseManager("root", null, "ISI");
+        databaseManager.createViewMurders();
+        databaseManager.createViewMurdersStatistics();
     }
 
     @Override
@@ -71,7 +73,6 @@ public class App extends Application{
         loader.setLocation(getClass().getResource("/javafx/view/RootApplication.fxml"));
 
         AnchorPane root = null;
-
         try {
             root = loader.load();
 
