@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="javafx.view.Settings"
-            prefHeight="400.0" prefWidth="600.0">
-
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.master1ISI.javafx.SettingsController">
+   <children>
+      <Button fx:id="btnRefreshDatabase" layoutX="97.0" layoutY="149.0" mnemonicParsing="false" onMouseClicked="#onMouseClickedBtnRefreshDB" text="Refresh Database" />
+      <Button fx:id="btnBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#onMouseClickedBtnBack" text="Back" />
+      <ProgressBar fx:id="progressBarSrc1" layoutX="99.0" layoutY="231.0" prefWidth="200.0" progress="0.0" />
+      <Label layoutX="31.0" layoutY="234.0" text="Source 1:" />
+      <Label layoutX="31.0" layoutY="270.0" text="Source 2:" />
+      <ProgressBar fx:id="progressBarSrc2" layoutX="99.0" layoutY="267.0" prefWidth="200.0" progress="0.0" />
+      <Label layoutX="31.0" layoutY="306.0" text="Source 3:" />
+      <ProgressBar fx:id="progressBarSrc3" layoutX="99.0" layoutY="303.0" prefWidth="200.0" progress="0.0" />
+      <Label layoutX="31.0" layoutY="341.0" text="Source 4:" />
+      <ProgressBar fx:id="progressBarSrc4" layoutX="99.0" layoutY="338.0" prefWidth="200.0" progress="0.0" />
+      <Label layoutX="31.0" layoutY="375.0" text="Source 5:" />
+      <ProgressBar fx:id="progressBarSrc5" layoutX="99.0" layoutY="372.0" prefWidth="200.0" progress="0.0" />
+      <Label layoutX="31.0" layoutY="410.0" text="Source 6:" />
+      <ProgressBar fx:id="progressBarSrc6" layoutX="99.0" layoutY="407.0" prefWidth="200.0" progress="0.0" />
+      <Label layoutX="403.0" layoutY="59.0" prefHeight="46.0" prefWidth="95.0" text="Settings" underline="true">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <ProgressIndicator fx:id="progressIndicator" layoutX="121.0" layoutY="436.0" progress="0.0" />
+      <Label layoutX="31.0" layoutY="451.0" text="Status total: " />
+   </children>
 </AnchorPane>

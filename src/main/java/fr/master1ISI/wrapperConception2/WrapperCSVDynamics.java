@@ -2,6 +2,8 @@ package fr.master1ISI.wrapperConception2;
 
 import au.com.bytecode.opencsv.CSVReader;
 import fr.master1ISI.App;
+import fr.master1ISI.wrapperConception1.Wrapper;
+import javafx.concurrent.Task;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,9 +12,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Level;
 
-public class WrapperCSVDynamics extends Thread{
+public class WrapperCSVDynamics extends Task<Integer>{
 
     private Connection connection;
 
@@ -31,11 +35,9 @@ public class WrapperCSVDynamics extends Thread{
      * @throws SQLException
      */
     private void createTable() throws SQLException{
-
         Statement statement = connection.createStatement();
         statement.execute(makeRequestTableCreation());
         statement.close();
-
     }
 
     /**
@@ -147,11 +149,13 @@ public class WrapperCSVDynamics extends Thread{
     private void readCSVFile() {
         String[] nextLine;
 
-        int nbLigne = 0;
+        int cptRowsData = 0;
+
+
+
         try {
             while ((nextLine = csvReader.readNext()) != null) {
-                nbLigne++;
-                System.out.println(nbLigne);
+
                 int size = nextLine.length;
 
                 if (size == 0)  continue;
@@ -160,6 +164,8 @@ public class WrapperCSVDynamics extends Thread{
 
                 if (debut.length() == 0 && size == 1) continue;
                 if (debut.startsWith("#")) continue;
+
+                cptRowsData++;
 
                 PreparedStatement statement = connection.prepareStatement(makePreparedStatementRequest());
 
@@ -170,11 +176,11 @@ public class WrapperCSVDynamics extends Thread{
                 statement.execute();
                 statement.close();
 
+                updateProgress(cptRowsData, cfgWrapper.getNbRowsData());
             }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SQLException e) {
-            App.logger.info("ERROR -> " + cfgWrapper.getFile() + " " + nbLigne);
             e.printStackTrace();
         }
     }
@@ -204,4 +210,11 @@ public class WrapperCSVDynamics extends Thread{
 
         return stringBuilder.toString();
     }
+
+    protected Integer call() {
+        run();
+        updateProgress(1, 1);
+        return cfgWrapper.getNbRowsData();
+    }
+
 }

@@ -7,6 +7,7 @@ public class ConfigurationWrapper {
     private File file;
     private char separator = ',';
     private boolean firstLineIsDeclarationAttr = true;
+    private int nbRowsData = 0;
 
     private String nameTable;
 
@@ -27,6 +28,10 @@ public class ConfigurationWrapper {
         this.firstLineIsDeclarationAttr = firstLineIsDeclarationAttr;
     }
 
+    public void setNbRowsData(int nbRowsData) {
+        this.nbRowsData = nbRowsData;
+    }
+
     public File getFile() {
         return file;
     }
@@ -41,5 +46,9 @@ public class ConfigurationWrapper {
 
     public String getNameTable() {
         return nameTable;
+    }
+
+    public int getNbRowsData() {
+        return nbRowsData;
     }
 }

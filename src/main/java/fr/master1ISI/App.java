@@ -1,29 +1,95 @@
 package fr.master1ISI;
 
+import fr.master1ISI.databaseManager.DatabaseManager;
+import fr.master1ISI.javafx.RootApplicationController;
+import fr.master1ISI.javafx.SettingsController;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.util.logging.Logger;
 
-public class App{
+public class App extends Application{
 
     public static Logger logger = Logger.getLogger("Logger Wrapper CSV");
 
+    public static App instance = null;
 
-    private void refreshDatabase(){
-        WrapperProcess.lunchC2();
+    public DatabaseManager databaseManager;
+
+    public final int WIDTH_WINDOWS = 900;
+    public final int HEIGHT_WINDOWS = 600;
+
+    public Stage primaryStage;
+
+    public RootApplicationController rootApplicationController;
+    public SettingsController settingsController;
+
+    public void showSettings(){
+
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(getClass().getResource("/javafx/view/Settings.fxml"));
+
+        AnchorPane root = null;
+        try {
+            root = loader.load();
+            settingsController = loader.getController();
+
+            changeScene(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
-/*
+
+    public void changeScene(Parent root){
+        Scene scene = new Scene(root, WIDTH_WINDOWS, HEIGHT_WINDOWS);
+
+        this.primaryStage.setScene(scene);
+        this.primaryStage.show();
+    }
+
+
+
+    private void initDB() {
+        databaseManager = new DatabaseManager("root", null, "ISI");
+    }
+
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        //Parent root = FXMLLoader.load(getClass().getResource("/javafx/view/App.fxml"));
+    public void start(Stage primaryStage) {
+        initDB();
 
-     //   Scene scene = new Scene(root, 900, 600);
+        this.primaryStage = primaryStage;
+        instance = this;
 
-        primaryStage.setTitle("HomeFinder");
-       // primaryStage.setScene(scene);
-        primaryStage.show();
-    }*/
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/javafx/view/RootApplication.fxml"));
+
+        AnchorPane root = null;
+
+        try {
+            root = loader.load();
+
+            rootApplicationController = loader.getController();
+
+            this.primaryStage.setResizable(false);
+            this.primaryStage.setTitle("HomeFinder");
+
+            changeScene(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     public static void main(String[] args) {
-        WrapperProcess.lunchC2();
-        //launch(args);
+        launch(args);
     }
 }
