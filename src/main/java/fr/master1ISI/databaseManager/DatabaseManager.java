@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DatabaseManager {
 
@@ -152,6 +153,38 @@ public class DatabaseManager {
 
             return null;
         }
+    }
+
+    private void sendRequest(final String request){
+
+        try {
+            Thread thread = new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        Connection connection = getConnection();
+                        Statement statement = connection.createStatement();
+                        statement.execute(request);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            thread.start();
+
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public void createViewMurders(){
+        sendRequest("SELECT ..");
+    }
+
+    public void createViewMurdersStatistics(){
+        sendRequest("SELECT ...");
     }
 
 }
