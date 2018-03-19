@@ -1,10 +1,9 @@
-package fr.master1ISI.wrapper;
+package fr.master1ISI.wrapperConception1;
 
 import au.com.bytecode.opencsv.CSVReader;
 import fr.master1ISI.App;
 import fr.master1ISI.databaseManager.DatabaseManager;
 
-import javax.swing.plaf.nimbus.State;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,7 +12,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class WrapperCSV implements Wrapper {
 

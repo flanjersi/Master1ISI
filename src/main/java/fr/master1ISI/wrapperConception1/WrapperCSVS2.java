@@ -1,4 +1,4 @@
-package fr.master1ISI.wrapper;
+package fr.master1ISI.wrapperConception1;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;

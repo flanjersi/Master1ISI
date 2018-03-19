@@ -1,4 +1,4 @@
-package fr.master1ISI.wrapper;
+package fr.master1ISI.wrapperConception1;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -182,7 +182,7 @@ public class WrapperCSVS3 extends WrapperCSV {
                 "city                 VARCHAR(22) ,\n" +
                 "state                VARCHAR(2) ,\n" +
                 "latitude             NUMERIC(10,7) ,\n" +
-                "longitude            INTEGER  ,\n" +
+                "longitude            NUMERIC(10,7)  ,\n" +
                 "state_fp             INTEGER  ,\n" +
                 "county_fp            INTEGER,\n" +
                 "tract_ce             INTEGER,\n" +

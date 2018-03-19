@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.view.Searcher">
+   <children>
+      <ChoiceBox layoutX="121.0" layoutY="186.0" prefWidth="150.0" />
+      <Label layoutX="41.0" layoutY="191.0" text="Country :" />
+      <Label layoutX="41.0" layoutY="252.0" text="State :" />
+      <ChoiceBox layoutX="121.0" layoutY="247.0" prefWidth="150.0" />
+      <ChoiceBox layoutX="709.0" layoutY="191.0" prefWidth="150.0" />
+      <Label layoutX="629.0" layoutY="196.0" text="City:" />
+      <Slider layoutX="709.0" layoutY="244.0" />
+      <Label layoutX="629.0" layoutY="245.0" text="Distance :" />
+      <Label layoutX="271.0" layoutY="330.0" prefHeight="219.0" prefWidth="358.0" style="-fx-border-color: black; -fx-alignment: center;" text="Text" textAlignment="CENTER" textOverrun="CLIP" />
+      <Label layoutX="375.0" layoutY="42.0" prefHeight="74.0" prefWidth="150.0" text="Searcher" underline="true">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
