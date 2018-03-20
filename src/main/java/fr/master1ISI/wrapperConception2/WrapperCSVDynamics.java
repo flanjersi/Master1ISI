@@ -40,17 +40,19 @@ public class WrapperCSVDynamics extends Task<Integer>{
         statement.close();
     }
 
+
     /**
      * Parse le fichier csv
      */
-    public void run() {
+    protected Integer call() {
         try {
             csvReader = new CSVReader(new FileReader(cfgWrapper.getFile()), cfgWrapper.getSeparator());
 
             if(!cfgWrapper.isFirstLineIsDeclarationAttr()) {
                 App.logger.warning("ATTENTION, il est impossible de creer la table si la première ligne du fichier n'est pas la déclaration des colonnes");
                 App.logger.info("FIN PARSE " + cfgWrapper.getNameTable());
-                return;
+                failed();
+                return 0;
             }
 
             setAttrs();
@@ -74,13 +76,19 @@ public class WrapperCSVDynamics extends Task<Integer>{
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            failed();
         } catch (SQLException e) {
             e.printStackTrace();
+            failed();
         } catch (IOException e) {
             e.printStackTrace();
+            failed();
         }
 
+        updateProgress(cfgWrapper.getNbRowsData(), cfgWrapper.getNbRowsData());
+        succeeded();
 
+        return cfgWrapper.getNbRowsData();
     }
 
 
@@ -210,11 +218,4 @@ public class WrapperCSVDynamics extends Task<Integer>{
 
         return stringBuilder.toString();
     }
-
-    protected Integer call() {
-        run();
-        updateProgress(1, 1);
-        return cfgWrapper.getNbRowsData();
-    }
-
 }

@@ -20,8 +20,7 @@ public class RootApplicationController implements Initializable{
 
     @FXML
     private void onMouseClickedBtnFindMyHome(MouseEvent event){
-        System.out.println("TEST FIND");
-
+        App.instance.showSearcher();
     }
 
     @FXML

@@ -1,12 +1,15 @@
 package fr.master1ISI.javafx;
 
 import fr.master1ISI.App;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -21,6 +24,26 @@ public class SettingsController implements Initializable {
 
     @FXML
     private Button btnBack;
+
+
+    @FXML
+    private RadioButton choiceBoxSrc1;
+
+    @FXML
+    private RadioButton choiceBoxSrc2;
+
+    @FXML
+    private RadioButton choiceBoxSrc3;
+
+    @FXML
+    private RadioButton choiceBoxSrc4;
+
+    @FXML
+    private RadioButton choiceBoxSrc5;
+
+    @FXML
+    private RadioButton choiceBoxSrc6;
+
 
     @FXML
     private ProgressBar progressBarSrc1;
@@ -47,6 +70,10 @@ public class SettingsController implements Initializable {
     private ProgressBar progressBarSrc6;
 
     @FXML
+    private ProgressBar progressBarSrc7;
+
+
+    @FXML
     private ProgressIndicator progressIndicator;
 
 
@@ -56,18 +83,15 @@ public class SettingsController implements Initializable {
 
     @FXML
     private void onMouseClickedBtnRefreshDB(MouseEvent mouseEvent){
+
         final Task<Integer> taskS1 = App.instance.databaseManager.createAndInsertDataSrc1();
         progressBarSrc1.progressProperty().bind(taskS1.progressProperty());
-
 
         final Task<Integer> taskS2 = App.instance.databaseManager.createAndInsertDataSrc2();
         progressBarSrc2.progressProperty().bind(taskS2.progressProperty());
 
-
-
         final Task<Integer> taskS3 = App.instance.databaseManager.createAndInsertDataSrc3();
         progressBarSrc3.progressProperty().bind(taskS3.progressProperty());
-
 
         final Task<Integer> taskS4 = App.instance.databaseManager.createAndInsertDataSrc4();
         progressBarSrc4.progressProperty().bind(taskS4.progressProperty());
@@ -78,49 +102,58 @@ public class SettingsController implements Initializable {
         final Task<Integer> taskS6 = App.instance.databaseManager.createAndInsertDataSrc6();
         progressBarSrc6.progressProperty().bind(taskS6.progressProperty());
 
+        final Task<Integer> taskS7 = App.instance.databaseManager.createAndInsertDataSrc7();
+        progressBarSrc7.progressProperty().bind(taskS7.progressProperty());
+
+
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 List<Thread> threads = new ArrayList<Thread>();
-                List<Task> tasks = new ArrayList<Task>();
 
-                tasks.add(taskS1);
-                threads.add(new Thread(taskS1));
+                if(choiceBoxSrc1.selectedProperty().get())
+                    threads.add(new Thread(taskS1));
 
-                tasks.add(taskS2);
-                threads.add(new Thread(taskS2));
+                if(choiceBoxSrc2.selectedProperty().get())
+                    threads.add(new Thread(taskS2));
 
-                tasks.add(taskS3);
-                threads.add(new Thread(taskS3));
+                if(choiceBoxSrc3.selectedProperty().get())
+                    threads.add(new Thread(taskS3));
 
-                tasks.add(taskS4);
-                threads.add(new Thread(taskS4));
+                if(choiceBoxSrc4.selectedProperty().get())
+                    threads.add(new Thread(taskS4));
 
-                tasks.add(taskS5);
-                threads.add(new Thread(taskS5));
+                if(choiceBoxSrc5.selectedProperty().get())
+                    threads.add(new Thread(taskS5));
 
-                tasks.add(taskS6);
-                threads.add(new Thread(taskS6));
+                if(choiceBoxSrc6.selectedProperty().get())
+                    threads.add(new Thread(taskS6));
+
+                threads.add(new Thread(taskS7));
 
                 for(Thread thread : threads){
                     thread.start();
                 }
 
                 updateProgress(0, 1);
-                updateProgress(0.5, 1);
 
+                double progress = 0;
+                double sizeThread = threads.size();
                 while(!threads.isEmpty()){
-                    for(int i = 0 ; i < tasks.size() ; i++){
-                        Thread t = threads.get(i);
-                        Task task = tasks.get(i);
+                    for(int i = 0 ; i < threads.size() ; i++){
+                        Thread thread = threads.get(i);
 
-                        if(!task.isDone()) continue;
+                        if(thread.getState() != Thread.State.TERMINATED) continue;
 
-                        updateProgress(getProgress() + (1.0/6.0), 1);
-                        t.join();
+                        thread.join();
+                        progress += (1.0 / sizeThread);
+
+                        updateProgress(progress, 1);
                         threads.remove(i);
                     }
                 }
+
+                updateProgress(1,1);
 
                 return null;
             }
@@ -132,17 +165,30 @@ public class SettingsController implements Initializable {
 
     @FXML
     private void onMouseClickedBtnBack(MouseEvent mouseEvent){
-        //TODO A faire
-        System.out.println("REFRESH");
+        App.instance.showHome();
     }
 
 
-    public void initialize(URL location, ResourceBundle resources) {
+    private void initProgressBar(){
         progressBarSrc1.setProgress(0);
         progressBarSrc2.setProgress(0);
         progressBarSrc3.setProgress(0);
         progressBarSrc4.setProgress(0);
         progressBarSrc5.setProgress(0);
         progressBarSrc6.setProgress(0);
+    }
+
+    private void initRadioButton(){
+        choiceBoxSrc1.selectedProperty().setValue(true);
+        choiceBoxSrc2.selectedProperty().setValue(true);
+        choiceBoxSrc3.selectedProperty().setValue(true);
+        choiceBoxSrc4.selectedProperty().setValue(true);
+        choiceBoxSrc5.selectedProperty().setValue(true);
+        choiceBoxSrc6.selectedProperty().setValue(true);
+    }
+
+    public void initialize(URL location, ResourceBundle resources) {
+        initProgressBar();
+        initRadioButton();
     }
 }

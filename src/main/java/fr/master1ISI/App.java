@@ -2,6 +2,7 @@ package fr.master1ISI;
 
 import fr.master1ISI.databaseManager.DatabaseManager;
 import fr.master1ISI.javafx.RootApplicationController;
+import fr.master1ISI.javafx.SearcherController;
 import fr.master1ISI.javafx.SettingsController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +29,7 @@ public class App extends Application{
 
     public RootApplicationController rootApplicationController;
     public SettingsController settingsController;
+    public SearcherController searcherController;
 
     public void showSettings(){
 
@@ -39,7 +41,41 @@ public class App extends Application{
         try {
             root = loader.load();
             settingsController = loader.getController();
+            changeScene(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+    }
+
+    public void showSearcher(){
+
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(getClass().getResource("/javafx/view/Searcher.fxml"));
+
+        AnchorPane root = null;
+        try {
+            root = loader.load();
+            searcherController = loader.getController();
+            changeScene(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public void showHome(){
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/javafx/view/RootApplication.fxml"));
+
+        AnchorPane root = null;
+
+        try {
+            root = loader.load();
+            rootApplicationController = loader.getController();
             changeScene(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,24 +105,9 @@ public class App extends Application{
         this.primaryStage = primaryStage;
         instance = this;
 
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/javafx/view/RootApplication.fxml"));
-
-        AnchorPane root = null;
-        try {
-            root = loader.load();
-
-            rootApplicationController = loader.getController();
-
-            this.primaryStage.setResizable(false);
-            this.primaryStage.setTitle("HomeFinder");
-
-            changeScene(root);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        this.primaryStage.setResizable(false);
+        this.primaryStage.setTitle("HomeFinder");
+        showHome();
     }
 
 
