@@ -9,9 +9,9 @@ public class AppTest {
 
 
     public static void main(String[] args) {
-        FileDownloader downloader = new GitHubFileDownloader("fivethirtyeight", "data", "police-killings/police_killings.csv", "dataset/police_killings.csv");
+        FileDownloader downloader = new GitHubFileDownloader("fivethirtyeight", "data", "police-killings/police_killings.csv", "police_killings.csv");
         downloader.download();
-//        downloader = new KaggleFileDownloader("START-UMD/gtd", "globalterrorismdb_0617dist.csv", "dataset");
-//        downloader.download();
+        downloader = new KaggleFileDownloader("START-UMD/gtd", "globalterrorismdb_0617dist.csv", "dataset");
+        downloader.download();
     }
 }

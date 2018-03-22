@@ -1,5 +1,7 @@
 package fr.master1ISI.fileDownloader;
 
+import fr.master1ISI.App;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -26,9 +28,13 @@ public class KaggleFileDownloader implements FileDownloader{
             Runtime runtime = Runtime.getRuntime();
             String cmd = "kaggle datasets download -p " + pathDirectoryDest +  " -f " + nameFileData + " -d " + nameDataSet;
 
+            App.logger.info("Téléchargement du dataset : " + nameDataSet + "/" + nameFileData + " sur kaggle");
+
             Process process = runtime.exec(cmd);
 
             process.waitFor();
+
+            App.logger.info("Fin du téléchargement du dataset : " + nameDataSet + "/" + nameFileData + " sur kaggle");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,6 +59,7 @@ public class KaggleFileDownloader implements FileDownloader{
 
             byte[] buffer = new byte[1024];
 
+            App.logger.info("Récupération du fichier \"" + nameFileData + "\" dans l'archive \"" + fileZip + "\"");
             ZipInputStream zis = new ZipInputStream(new FileInputStream(fileZip));
             ZipEntry zipEntry = zis.getNextEntry();
 
@@ -70,6 +77,7 @@ public class KaggleFileDownloader implements FileDownloader{
             fos.close();
             zis.closeEntry();
             zis.close();
+            App.logger.info("Récupération terminé du fichier \"" + nameFileData + "\" dans l'archive \"" + fileZip + "\"");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -81,6 +89,8 @@ public class KaggleFileDownloader implements FileDownloader{
     @Override
     public boolean download() {
         executeCommandKaggle();
+
+
         unzip();
         return true;
     }

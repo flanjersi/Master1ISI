@@ -107,6 +107,7 @@ public class GitHubFileDownloader implements FileDownloader {
 
 
             File file = new File(pathFileDest);
+            file.getParentFile().mkdirs();
             file.createNewFile();
 
             PrintWriter writer = new PrintWriter(file, "UTF-8");
