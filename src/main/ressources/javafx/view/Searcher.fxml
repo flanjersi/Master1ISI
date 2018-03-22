@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.master1ISI.javafx.SearcherController">
    <children>
-      <ChoiceBox fx:id="choiceBoxCountry" layoutX="145.0" layoutY="117.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="choiceBoxCountry" layoutX="145.0" layoutY="117.0" onMouseClicked="#onMouseClickedChoiceCountry" prefWidth="150.0" />
       <Label layoutX="70.0" layoutY="122.0" text="Country :" />
       <Label layoutX="88.0" layoutY="169.0" text="State :" />
       <ChoiceBox fx:id="choiceBoxState" layoutX="145.0" layoutY="164.0" prefWidth="150.0" />

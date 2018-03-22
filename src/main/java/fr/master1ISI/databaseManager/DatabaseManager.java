@@ -7,10 +7,11 @@ import fr.master1ISI.wrapperConception2.WrapperCSVDynamics;
 import javafx.concurrent.Task;
 
 import javax.sql.DataSource;
+import javax.xml.transform.Result;
 import java.io.File;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseManager {
 
@@ -50,7 +51,7 @@ public class DatabaseManager {
             configurationWrapperS1.setNameTable("SOURCE_1");
 
             WrapperCSVDynamics wrapper = new WrapperCSVDynamics(configurationWrapperS1, getConnection());
-            configurationWrapperS1.setNbRowsData(93847);
+            configurationWrapperS1.setNbRowsData(170000);
 
             return wrapper;
         } catch (SQLException e) {
@@ -172,27 +173,98 @@ public class DatabaseManager {
         }
     }
 
-    private void sendRequest(final String request){
+    public Task<Integer> createAndInsertDataSrc8(){
+
 
         try {
-            Thread thread = new Thread(new Runnable() {
-                public void run() {
-                    try {
-                        Connection connection = getConnection();
-                        Statement statement = connection.createStatement();
-                        statement.execute(request);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            thread.start();
+            ConfigurationWrapper configurationWrapperS8 = new ConfigurationWrapper(new File(path + "Master1ISI/src/main/ressources/dataset/source8/worldcitiespop.csv"));
+            configurationWrapperS8.setNameTable("CITIES_LOCATION");
+            configurationWrapperS8.setNbRowsData(200000);
 
-            thread.join();
-        } catch (InterruptedException e) {
+            WrapperCSVDynamics wrapper = new WrapperCSVDynamics(configurationWrapperS8, getConnection());
+
+            return wrapper;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
+
+    public void sendRequest(final String request){
+
+        try {
+            Connection connection = getConnection();
+            Statement statement = connection.createStatement();
+            statement.execute(request);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+
+    public List<String> getAllCountry(){
+        List<String> countries = new ArrayList<String>();
+
+        try {
+            Connection connection = getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT DISTINCT Country FROM CITIES WHERE Country IS NOT NULL ORDER BY Country");
+
+            while(resultSet.next()){
+                countries.add(resultSet.getString("Country"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return countries;
+    }
+
+    public List<String> getAllState(String country){
+        List<String> states = new ArrayList<String>();
+
+        try {
+            Connection connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT DISTINCT State FROM CITIES WHERE State IS NOT NULL AND Country = ? ORDER BY State");
+            statement.setString(1, country);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+                states.add(resultSet.getString("State"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return states;
+    }
+
+
+    public List<String> getAllRegions(String country){
+        List<String> regions = new ArrayList<String>();
+
+        try {
+            Connection connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT DISTINCT Region FROM CITIES WHERE Regions IS NOT NULL AND Country = ? ORDER BY Region");
+            statement.setString(1, country);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+                regions.add(resultSet.getString("Region"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return regions;
     }
 
 
@@ -264,38 +336,4 @@ public class DatabaseManager {
                 "WHERE SOURCE_5.state_SOURCE_5 = SOURCE_5N2.state_SOURCE_5N2\n" +
                 "AND SOURCE_5.city_SOURCE_5 = SOURCE_5N2.city_SOURCE_5N2");
     }
-
-    public void createViewListCity(){
-        sendRequest("DROP VIEW IF EXISTS CITIES");
-        sendRequest("CREATE VIEW CITIES\n" +
-                "AS SELECT \n" +
-                "NULL AS city ,\n" +
-                "SOURCE_2.state_SOURCE_2 AS state,\n" +
-                "NULL AS 2014_murders,\n" +
-                "NULL AS 2015_murders,\n" +
-                "NULL AS 2016_murders,\n" +
-                "NULL AS change_2014_2015,\n" +
-                "NULL AS change_2015_2016,\n" +
-                "SOURCE_2.hate_crimes_per_100k_splc_SOURCE_2 AS hate_crimes,\n" +
-                "SOURCE_2.avg_hatecrimes_per_100k_fbi_SOURCE_2 AS avg_hatecrimes\n" +
-                "FROM SOURCE_2\n" +
-                "\n" +
-                "UNION ALL\n" +
-                "\n" +
-                "SELECT\n" +
-                "\n" +
-                "SOURCE_5.city_SOURCE_5 AS city,\n" +
-                "SOURCE_5.state_SOURCE_5 AS state,\n" +
-                "SOURCE_5.2014_murders_SOURCE_5 AS 2014_murders,\n" +
-                "GREATEST(SOURCE_5.2015_murders_SOURCE_5,SOURCE_5N2.2015_murders_SOURCE_5N2) AS 2015_murders, \n" +
-                "SOURCE_5N2.2016_murders_SOURCE_5N2 AS 2016_murders,\n" +
-                "SOURCE_5.change_SOURCE_5 AS change_2014_2015,\n" +
-                "SOURCE_5N2.change_SOURCE_5N2 AS change_2015_2016,\n" +
-                "NULL AS hate_crimes,\n" +
-                "NULL AS avg_hatecrimes\n" +
-                "FROM SOURCE_5, SOURCE_5N2\n" +
-                "WHERE SOURCE_5.state_SOURCE_5 = SOURCE_5N2.state_SOURCE_5N2\n" +
-                "AND SOURCE_5.city_SOURCE_5 = SOURCE_5N2.city_SOURCE_5N2");
-    }
-
 }

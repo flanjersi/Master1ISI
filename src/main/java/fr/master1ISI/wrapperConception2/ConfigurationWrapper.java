@@ -8,6 +8,7 @@ public class ConfigurationWrapper {
     private char separator = ',';
     private boolean firstLineIsDeclarationAttr = true;
     private int nbRowsData = 0;
+    private int limitNbRowsPerBatch = 10_000;
 
     private String nameTable;
 
@@ -51,4 +52,14 @@ public class ConfigurationWrapper {
     public int getNbRowsData() {
         return nbRowsData;
     }
+
+
+    public int getLimitNbRowsPerBatch() {
+        return limitNbRowsPerBatch;
+    }
+
+    public void setLimitNbRowsPerBatch(int limitNbRowsPerBatch) {
+        this.limitNbRowsPerBatch = limitNbRowsPerBatch;
+    }
+
 }

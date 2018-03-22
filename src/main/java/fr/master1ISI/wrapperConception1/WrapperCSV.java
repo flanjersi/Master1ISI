@@ -1,6 +1,6 @@
 package fr.master1ISI.wrapperConception1;
 
-import au.com.bytecode.opencsv.CSVReader;
+import com.opencsv.CSVReader;
 import fr.master1ISI.App;
 import fr.master1ISI.databaseManager.DatabaseManager;
 
@@ -41,7 +41,8 @@ public abstract class WrapperCSV implements Wrapper {
 
     public void parse(File file, DatabaseManager databaseManager) {
         try {
-            csvReader = new CSVReader(new FileReader(file), separator);
+            csvReader = new CSVReader(new FileReader(file));
+
             if(firstLineIsDeclarationAttr) csvReader.readNext();
 
             connection = databaseManager.getConnection();

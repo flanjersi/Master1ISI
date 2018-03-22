@@ -1,13 +1,20 @@
 package fr.master1ISI.javafx;
 
+import fr.master1ISI.App;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class SearcherController implements Initializable {
@@ -39,9 +46,68 @@ public class SearcherController implements Initializable {
     @FXML
     private Slider sliderDistance;
 
+    private boolean alreadyShowCountries;
+
+    @FXML
+    private void onMouseClickedChoiceCountry(MouseEvent event){
+        if(alreadyShowCountries) return;
+
+        Task task = new Task() {
+            @Override
+            protected Void call() throws Exception {
+
+                List<String> countries = App.instance.databaseManager.getAllCountry();
+                choiceBoxCountry.getItems().addAll(countries);
+
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(e -> {App.instance.changeCursor(Cursor.DEFAULT); choiceBoxCountry.show();});
+        task.setOnFailed(e -> App.instance.changeCursor(Cursor.DEFAULT));
+
+        App.instance.changeCursor(Cursor.WAIT);
+        Thread thread = new Thread(task);
+        thread.start();
+
+        alreadyShowCountries = true;
+    }
+
 
     private void initChoiceBoxCountry(){
+        choiceBoxCountry.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldIndex, Number newIndex) {
+                String country = choiceBoxCountry.getItems().get(newIndex.intValue());
+                List<String> states = App.instance.databaseManager.getAllState(country);
+
+                App.instance.changeCursor(Cursor.WAIT);
+
+                if(states.isEmpty()){
+                    choiceBoxState.getItems().add("None");
+                    App.instance.changeCursor(Cursor.DEFAULT);
+                    return;
+                }
+
+                Task task = new Task() {
+                    @Override
+                    protected Void call() throws Exception {
+
+                        List<String> countries = App.instance.databaseManager.getAllState(country);
+                        choiceBoxState.getItems().addAll(countries);
+
+                        return null;
+                    }
+                };
+
+                task.setOnSucceeded(e -> App.instance.changeCursor(Cursor.DEFAULT));
+                task.setOnFailed(e -> App.instance.changeCursor(Cursor.DEFAULT));
+
+                Thread thread = new Thread(task);
+                thread.start();
+
+            }
+        });
     }
 
     private void initChoiceBoxState(){
@@ -59,5 +125,7 @@ public class SearcherController implements Initializable {
         initChoiceBoxCountry();
         initChoiceBoxState();
         initChoiceBoxTypeOfDanger();
+
+        alreadyShowCountries = false;
     }
 }

@@ -1,19 +1,20 @@
 package fr.master1ISI.wrapperConception2;
 
-import au.com.bytecode.opencsv.CSVReader;
+import com.opencsv.CSVReader;
 import fr.master1ISI.App;
-import fr.master1ISI.wrapperConception1.Wrapper;
 import javafx.concurrent.Task;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 
 public class WrapperCSVDynamics extends Task<Integer>{
@@ -24,6 +25,7 @@ public class WrapperCSVDynamics extends Task<Integer>{
     private String[] nameAttrs;
 
     private CSVReader csvReader;
+
 
     public WrapperCSVDynamics(ConfigurationWrapper cfg, Connection connection){
         this.cfgWrapper = cfg;
@@ -46,8 +48,7 @@ public class WrapperCSVDynamics extends Task<Integer>{
      */
     protected Integer call() {
         try {
-            csvReader = new CSVReader(new FileReader(cfgWrapper.getFile()), cfgWrapper.getSeparator());
-
+            csvReader = new CSVReader(new InputStreamReader(new FileInputStream(cfgWrapper.getFile())), ',', '"', '|');
             if(!cfgWrapper.isFirstLineIsDeclarationAttr()) {
                 App.logger.warning("ATTENTION, il est impossible de creer la table si la première ligne du fichier n'est pas la déclaration des colonnes");
                 App.logger.info("FIN PARSE " + cfgWrapper.getNameTable());
@@ -160,10 +161,13 @@ public class WrapperCSVDynamics extends Task<Integer>{
         int cptRowsData = 0;
 
 
-
         try {
-            while ((nextLine = csvReader.readNext()) != null) {
+            String preparedRequest = makePreparedStatementRequest();
+            PreparedStatement statement = connection.prepareStatement(preparedRequest);
 
+            boolean hasRequestToSend = false;
+
+            while ((nextLine = csvReader.readNext()) != null) {
                 int size = nextLine.length;
 
                 if (size == 0)  continue;
@@ -173,19 +177,31 @@ public class WrapperCSVDynamics extends Task<Integer>{
                 if (debut.length() == 0 && size == 1) continue;
                 if (debut.startsWith("#")) continue;
 
-                cptRowsData++;
 
-                PreparedStatement statement = connection.prepareStatement(makePreparedStatementRequest());
-
-                for(int index = 0 ; index < nameAttrs.length ; index++){
+                for(int index = 0 ; index < nextLine.length ; index++){
                     statement.setString(index + 1, nextLine[index]);
                 }
 
-                statement.execute();
-                statement.close();
+                statement.addBatch();
+                hasRequestToSend = true;
 
+                cptRowsData++;
+
+                if(cptRowsData % cfgWrapper.getLimitNbRowsPerBatch() == 0 ){
+                    statement.executeLargeBatch();
+                    statement.close();
+                    statement = connection.prepareStatement(preparedRequest);
+                    hasRequestToSend = false;
+                    updateProgress(cptRowsData, cfgWrapper.getNbRowsData());
+                }
+            }
+
+            if(hasRequestToSend){
+                statement.executeLargeBatch();
+                statement.close();
                 updateProgress(cptRowsData, cfgWrapper.getNbRowsData());
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SQLException e) {

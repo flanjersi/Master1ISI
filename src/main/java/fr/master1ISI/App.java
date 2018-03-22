@@ -1,11 +1,13 @@
 package fr.master1ISI;
 
 import fr.master1ISI.databaseManager.DatabaseManager;
+import fr.master1ISI.fileDownloader.FileDownloader;
 import fr.master1ISI.javafx.RootApplicationController;
 import fr.master1ISI.javafx.SearcherController;
 import fr.master1ISI.javafx.SettingsController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -25,7 +27,8 @@ public class App extends Application{
     public final int WIDTH_WINDOWS = 900;
     public final int HEIGHT_WINDOWS = 600;
 
-    public Stage primaryStage;
+    private Stage primaryStage;
+    private Scene currentScene;
 
     public RootApplicationController rootApplicationController;
     public SettingsController settingsController;
@@ -84,9 +87,8 @@ public class App extends Application{
     }
 
     public void changeScene(Parent root){
-        Scene scene = new Scene(root, WIDTH_WINDOWS, HEIGHT_WINDOWS);
-
-        this.primaryStage.setScene(scene);
+        this.currentScene = new Scene(root, WIDTH_WINDOWS, HEIGHT_WINDOWS);
+        this.primaryStage.setScene(currentScene);
         this.primaryStage.show();
     }
 
@@ -94,8 +96,8 @@ public class App extends Application{
 
     private void initDB() {
         databaseManager = new DatabaseManager("root", null, "ISI");
-        databaseManager.createViewMurders();
-        databaseManager.createViewMurdersStatistics();
+//        databaseManager.createViewMurders();
+//     databaseManager.createViewMurdersStatistics();
     }
 
     @Override
@@ -110,6 +112,9 @@ public class App extends Application{
         showHome();
     }
 
+    public void changeCursor(Cursor cursor){
+        currentScene.setCursor(cursor);
+    }
 
     public static void main(String[] args) {
         launch(args);
