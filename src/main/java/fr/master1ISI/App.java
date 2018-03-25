@@ -4,6 +4,7 @@ import fr.master1ISI.databaseManager.DatabaseManager;
 import fr.master1ISI.mediator.Mediator;
 
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class App {
@@ -26,6 +27,7 @@ public class App {
 
         mediator = new Mediator(databaseManager);
 
+        //logger.setLevel(Level.OFF);
 
         Scanner scanner = new Scanner(System.in);
 
@@ -34,12 +36,12 @@ public class App {
             String request = scanner.nextLine();
 
             try{
+                System.out.println("Traitement de la requete en cours");
                 mediator.sendRequest(request);
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
-
     }
 
     public static DatabaseManager getDatabaseManager() {
