@@ -1,6 +1,6 @@
 package fr.master1ISI.javafx;
 
-import fr.master1ISI.App;
+import fr.master1ISI.AppJavaFX;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
@@ -56,17 +56,18 @@ public class SearcherController implements Initializable {
             @Override
             protected Void call() throws Exception {
 
-                List<String> countries = App.instance.databaseManager.getAllCountry();
+                List<String> countries = AppJavaFX.instance.getDatabaseManager().getAllCountry();
                 choiceBoxCountry.getItems().addAll(countries);
 
                 return null;
             }
         };
 
-        task.setOnSucceeded(e -> {App.instance.changeCursor(Cursor.DEFAULT); choiceBoxCountry.show();});
-        task.setOnFailed(e -> App.instance.changeCursor(Cursor.DEFAULT));
+        task.setOnSucceeded(e -> {
+            AppJavaFX.instance.changeCursor(Cursor.DEFAULT); choiceBoxCountry.show();});
+        task.setOnFailed(e -> AppJavaFX.instance.changeCursor(Cursor.DEFAULT));
 
-        App.instance.changeCursor(Cursor.WAIT);
+        AppJavaFX.instance.changeCursor(Cursor.WAIT);
         Thread thread = new Thread(task);
         thread.start();
 
@@ -79,13 +80,13 @@ public class SearcherController implements Initializable {
 
             public void changed(ObservableValue<? extends Number> observableValue, Number oldIndex, Number newIndex) {
                 String country = choiceBoxCountry.getItems().get(newIndex.intValue());
-                List<String> states = App.instance.databaseManager.getAllState(country);
+                List<String> states = AppJavaFX.instance.getDatabaseManager().getAllState(country);
 
-                App.instance.changeCursor(Cursor.WAIT);
+                AppJavaFX.instance.changeCursor(Cursor.WAIT);
 
                 if(states.isEmpty()){
                     choiceBoxState.getItems().add("None");
-                    App.instance.changeCursor(Cursor.DEFAULT);
+                    AppJavaFX.instance.changeCursor(Cursor.DEFAULT);
                     return;
                 }
 
@@ -93,15 +94,15 @@ public class SearcherController implements Initializable {
                     @Override
                     protected Void call() throws Exception {
 
-                        List<String> countries = App.instance.databaseManager.getAllState(country);
+                        List<String> countries = AppJavaFX.instance.getDatabaseManager().getAllState(country);
                         choiceBoxState.getItems().addAll(countries);
 
                         return null;
                     }
                 };
 
-                task.setOnSucceeded(e -> App.instance.changeCursor(Cursor.DEFAULT));
-                task.setOnFailed(e -> App.instance.changeCursor(Cursor.DEFAULT));
+                task.setOnSucceeded(e -> AppJavaFX.instance.changeCursor(Cursor.DEFAULT));
+                task.setOnFailed(e -> AppJavaFX.instance.changeCursor(Cursor.DEFAULT));
 
                 Thread thread = new Thread(task);
                 thread.start();

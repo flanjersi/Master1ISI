@@ -1,7 +1,7 @@
 package fr.master1ISI.wrapperConception1;
 
 import com.opencsv.CSVReader;
-import fr.master1ISI.App;
+import fr.master1ISI.AppJavaFX;
 import fr.master1ISI.databaseManager.DatabaseManager;
 
 import java.io.File;
@@ -48,20 +48,20 @@ public abstract class WrapperCSV implements Wrapper {
             connection = databaseManager.getConnection();
 
 
-            App.logger.info("Suppression de la table " + nameTable);
+            AppJavaFX.logger.info("Suppression de la table " + nameTable);
             Statement statement = connection.createStatement();
             statement.execute("DROP TABLE IF EXISTS " + nameTable);
             statement.close();
 
-            App.logger.log(Level.INFO, "Creation de la table " + nameTable);
+            AppJavaFX.logger.log(Level.INFO, "Creation de la table " + nameTable);
             createTable();
 
-            App.logger.log(Level.INFO, "Lecture du fichier csv et insertion des données dans la table " + nameTable);
+            AppJavaFX.logger.log(Level.INFO, "Lecture du fichier csv et insertion des données dans la table " + nameTable);
             readCSVFile();
 
             connection.close();
 
-            App.logger.log(Level.INFO, "FIN insertion des données dans la table " + nameTable);
+            AppJavaFX.logger.log(Level.INFO, "FIN insertion des données dans la table " + nameTable);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

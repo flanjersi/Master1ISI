@@ -1,8 +1,7 @@
 package fr.master1ISI.wrapperConception2;
 
 import com.opencsv.CSVReader;
-import fr.master1ISI.App;
-import javafx.concurrent.Task;
+import fr.master1ISI.AppJavaFX;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,14 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
 
-public class WrapperCSVDynamics extends Task<Integer>{
-
-    private Connection connection;
+public class WrapperCSVDynamics {
 
     private ConfigurationWrapper cfgWrapper;
     private String[] nameAttrs;
@@ -27,16 +21,15 @@ public class WrapperCSVDynamics extends Task<Integer>{
     private CSVReader csvReader;
 
 
-    public WrapperCSVDynamics(ConfigurationWrapper cfg, Connection connection){
+    public WrapperCSVDynamics(ConfigurationWrapper cfg){
         this.cfgWrapper = cfg;
-        this.connection = connection;
     }
 
     /**
      * Creer la table correspondant à la source CSV
      * @throws SQLException
      */
-    private void createTable() throws SQLException{
+    private void createTable(Connection connection) throws SQLException{
         Statement statement = connection.createStatement();
         statement.execute(makeRequestTableCreation());
         statement.close();
@@ -46,50 +39,41 @@ public class WrapperCSVDynamics extends Task<Integer>{
     /**
      * Parse le fichier csv
      */
-    protected Integer call() {
+    public void run(Connection connection) {
         try {
             csvReader = new CSVReader(new InputStreamReader(new FileInputStream(cfgWrapper.getFile())), ',', '"', '|');
             if(!cfgWrapper.isFirstLineIsDeclarationAttr()) {
-                App.logger.warning("ATTENTION, il est impossible de creer la table si la première ligne du fichier n'est pas la déclaration des colonnes");
-                App.logger.info("FIN PARSE " + cfgWrapper.getNameTable());
-                failed();
-                return 0;
+                AppJavaFX.logger.warning("ATTENTION, il est impossible de creer la table si la première ligne du fichier n'est pas la déclaration des colonnes");
+                AppJavaFX.logger.info("FIN PARSE " + cfgWrapper.getNameTable());
             }
 
             setAttrs();
 
-            App.logger.info("Suppression de la table " + cfgWrapper.getNameTable());
+            AppJavaFX.logger.info("Suppression de la table " + cfgWrapper.getNameTable());
             Statement statement = connection.createStatement();
             statement.execute("DROP TABLE IF EXISTS " + cfgWrapper.getNameTable());
             statement.close();
 
-            createTable();
+            createTable(connection);
 
-            App.logger.log(Level.INFO, "Creation de la table " + cfgWrapper.getNameTable());
+            AppJavaFX.logger.log(Level.INFO, "Creation de la table " + cfgWrapper.getNameTable());
 
-            App.logger.log(Level.INFO, "Lecture du fichier csv et insertion des données dans la table " + cfgWrapper.getNameTable());
+            AppJavaFX.logger.log(Level.INFO, "Lecture du fichier csv et insertion des données dans la table " + cfgWrapper.getNameTable());
 
-            readCSVFile();
+            readCSVFile(connection);
 
             connection.close();
 
-            App.logger.log(Level.INFO, "FIN insertion des données dans la table " + cfgWrapper.getNameTable());
+            AppJavaFX.logger.log(Level.INFO, "FIN insertion des données dans la table " + cfgWrapper.getNameTable());
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            failed();
         } catch (SQLException e) {
             e.printStackTrace();
-            failed();
         } catch (IOException e) {
             e.printStackTrace();
-            failed();
         }
 
-        updateProgress(cfgWrapper.getNbRowsData(), cfgWrapper.getNbRowsData());
-        succeeded();
-
-        return cfgWrapper.getNbRowsData();
     }
 
 
@@ -155,7 +139,7 @@ public class WrapperCSVDynamics extends Task<Integer>{
     /**
      * Lit le fichier csv ligne par ligne et insert les données dans la base de donnée renseigné
      */
-    private void readCSVFile() {
+    private void readCSVFile(Connection connection) {
         String[] nextLine;
 
         int cptRowsData = 0;
@@ -192,14 +176,12 @@ public class WrapperCSVDynamics extends Task<Integer>{
                     statement.close();
                     statement = connection.prepareStatement(preparedRequest);
                     hasRequestToSend = false;
-                    updateProgress(cptRowsData, cfgWrapper.getNbRowsData());
                 }
             }
 
             if(hasRequestToSend){
                 statement.executeLargeBatch();
                 statement.close();
-                updateProgress(cptRowsData, cfgWrapper.getNbRowsData());
             }
 
         } catch (IOException e) {

@@ -8,7 +8,6 @@
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.master1ISI.javafx.RootApplicationController">
    <children>
       <Button fx:id="btnFindMyHome" layoutX="394.0" layoutY="288.0" mnemonicParsing="false" onMouseClicked="#onMouseClickedBtnFindMyHome" text="Find my home" />
-      <Button fx:id="btnSettings" layoutX="807.0" layoutY="561.0" mnemonicParsing="false" onMouseClicked="#onMouseClickedBtnSettings" prefHeight="25.0" prefWidth="79.0" text="Settings" />
       <Text layoutX="334.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Find your home" wrappingWidth="232.7294921875">
          <font>
             <Font size="29.0" />
