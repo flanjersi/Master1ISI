@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!DOCTYPE  config  SYSTEM  "/home/jeremy/Faculte/Master/S2/ISI/Master1ISI/src/main/ressources/config.dtd" >
+
+<config>
+    <sources>
+        <source type="kaggle">
+            <nameTable>globalterrorismdb_0617dist</nameTable>
+            <pathFileDest>dataset/source1/globalterrorismdb_0617dist.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>START-UMD/gtd</nameDataSet>
+                <nameFileData>globalterrorismdb_0617dist.csv</nameFileData>
+            </kaggle>
+        </source>
+
+        <source type="github">
+            <nameTable>hate_crimes</nameTable>
+            <pathFileDest>dataset/source2/hate_crimes.csv</pathFileDest>
+            <github>
+                <ownerName>fivethirtyeight</ownerName>
+                <repoName>data</repoName>
+                <pathFileGithub>hate-crimes/hate_crimes.csv</pathFileGithub>
+            </github>
+        </source>
+
+        <source type="github">
+            <nameTable>police_killings</nameTable>
+            <pathFileDest>dataset/source3/police_killings.csv</pathFileDest>
+            <github>
+                <ownerName>fivethirtyeight</ownerName>
+                <repoName>data</repoName>
+                <pathFileGithub>police-killings/police_killings.csv</pathFileGithub>
+            </github>
+        </source>
+
+        <source type="github">
+            <nameTable>police_killings</nameTable>
+            <pathFileDest>dataset/source3/police_killings.csv</pathFileDest>
+            <github>
+                <ownerName>fivethirtyeight</ownerName>
+                <repoName>data</repoName>
+                <pathFileGithub>police-killings/police_killings.csv</pathFileGithub>
+            </github>
+        </source>
+        
+        <source type="github">
+            <nameTable>police_deaths</nameTable>
+            <pathFileDest>dataset/source4/clean_data.csv</pathFileDest>
+            <github>
+                <ownerName>fivethirtyeight</ownerName>
+                <repoName>data</repoName>
+                <pathFileGithub>police-deaths/clean_data.csv</pathFileGithub>
+            </github>
+        </source>
+
+        <source type="github">
+            <nameTable>murder_2015_final</nameTable>
+            <pathFileDest>dataset/source5/murder_2015_final.csv</pathFileDest>
+            <github>
+                <ownerName>fivethirtyeight</ownerName>
+                <repoName>data</repoName>
+                <pathFileGithub>murder_2016/murder_2015_final.csv</pathFileGithub>
+            </github>
+        </source>
+
+
+        <source type="github">
+            <nameTable>murder_2016_prelim</nameTable>
+            <pathFileDest>dataset/source5/murder_2016_prelim.csv</pathFileDest>
+            <github>
+                <ownerName>fivethirtyeight</ownerName>
+                <repoName>data</repoName>
+                <pathFileGithub>murder_2016/murder_2016_prelim.csv</pathFileGithub>
+            </github>
+        </source>
+
+        <source type="github">
+            <nameTable>US_STATES</nameTable>
+            <pathFileDest>dataset/source6/US_States.csv</pathFileDest>
+            <github>
+                <ownerName>jasonong</ownerName>
+                <repoName>List-of-US-States</repoName>
+                <pathFileGithub>states.csv</pathFileGithub>
+            </github>
+        </source>
+        
+        <source type="kaggle">
+            <nameTable>CRIME_RATE_USA_CITIES</nameTable>
+            <pathFileDest>dataset/source7/report.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>marshallproject/crime-rates</nameDataSet>
+                <nameFileData>report.csv</nameFileData>
+            </kaggle>
+        </source>
+
+        <source type="kaggle">
+            <nameTable>SouthAfricaCrimeStats</nameTable>
+            <pathFileDest>dataset/source8/SouthAfricaCrimeStats_v2.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>slwessels/crime-statistics-for-south-africa</nameDataSet>
+                <nameFileData>SouthAfricaCrimeStats_v2.csv</nameFileData>
+            </kaggle>
+        </source>
+
+
+        <source type="kaggle">
+            <nameTable>PROPERTY_STOLEN_RECOVERED_INDIA</nameTable>
+            <pathFileDest>dataset/source9/10_Property_stolen_and_recovered.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>rajanand/crime-in-india</nameDataSet>
+                <nameFileData>10_Property_stolen_and_recovered.csv</nameFileData>
+            </kaggle>
+        </source>
+
+        <source type="kaggle">
+            <nameTable>VICTIMS_OF_RAPE_INDIA</nameTable>
+            <pathFileDest>dataset/source9/20_Victims_of_rape.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>rajanand/crime-in-india</nameDataSet>
+                <nameFileData>20_Victims_of_rape.csv</nameFileData>
+            </kaggle>
+        </source>
+
+
+        <source type="kaggle">
+            <nameTable>TRIAL_VIOLENT_CRIMES_INDIA</nameTable>
+            <pathFileDest>dataset/source9/28_Trial_of_violent_crimes_by_courts.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>rajanand/crime-in-india</nameDataSet>
+                <nameFileData>28_Trial_of_violent_crimes_by_courts.csv</nameFileData>
+            </kaggle>
+        </source>
+
+        <source type="kaggle">
+            <nameTable>AUTO_THEFT_INDIA</nameTable>
+            <pathFileDest>dataset/source9/30_Auto_theft.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>rajanand/crime-in-india</nameDataSet>
+                <nameFileData>30_Auto_theft.csv</nameFileData>
+            </kaggle>
+        </source>
+
+        <source type="kaggle">
+            <nameTable>VICTIMS_MURDER_INDIA</nameTable>
+            <pathFileDest>dataset/source9/32_Murder_victim_age_sex.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>rajanand/crime-in-india</nameDataSet>
+                <nameFileData>32_Murder_victim_age_sex.csv</nameFileData>
+            </kaggle>
+        </source>
+
+
+        <source type="kaggle">
+            <nameTable>VICTIMS_HOMICIDE_INDIA</nameTable>
+            <pathFileDest>dataset/source9/33_CH_not_murder_victim_age_sex.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>rajanand/crime-in-india</nameDataSet>
+                <nameFileData>33_CH_not_murder_victim_age_sex.csv</nameFileData>
+            </kaggle>
+        </source>
+
+
+        <source type="kaggle">
+            <nameTable>HUMAN_RIGHTS_VIOLATION_BY_POLICE_INDIA</nameTable>
+            <pathFileDest>dataset/source9/35_Human_rights_violation_by_police.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>rajanand/crime-in-india</nameDataSet>
+                <nameFileData>35_Human_rights_violation_by_police.csv</nameFileData>
+            </kaggle>
+        </source>
+
+
+        <source type="kaggle">
+            <nameTable>VICTIMS_KIDNAPPING_ABDUCTION_INDIA</nameTable>
+            <pathFileDest>dataset/source9/39_Specific_purpose_of_kidnapping_and_abduction.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>rajanand/crime-in-india</nameDataSet>
+                <nameFileData>39_Specific_purpose_of_kidnapping_and_abduction.csv</nameFileData>
+            </kaggle>
+        </source>
+
+
+        <source type="kaggle">
+            <nameTable>CRIME_AGAINST_WOMEN_INDIA</nameTable>
+            <pathFileDest>dataset/source9/42_Cases_under_crime_against_women.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>rajanand/crime-in-india</nameDataSet>
+                <nameFileData>42_Cases_under_crime_against_women.csv</nameFileData>
+            </kaggle>
+        </source>
+
+        <source type="kaggle">
+            <nameTable>ARREST_OF_CRIME_AGAINST_WOMEN_INDIA</nameTable>
+            <pathFileDest>dataset/source9/43_Arrests_under_crime_against_women.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>rajanand/crime-in-india</nameDataSet>
+                <nameFileData>43_Arrests_under_crime_against_women.csv</nameFileData>
+            </kaggle>
+        </source>
+
+
+
+
+        <source type="kaggle">
+            <nameTable>OFFENSES_BY_CITY_CALIFORNIA</nameTable>
+            <pathFileDest>dataset/source10/ca_offenses_by_city.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>fbi-us/california-crime</nameDataSet>
+                <nameFileData>ca_offenses_by_city.csv</nameFileData>
+            </kaggle>
+        </source>
+
+
+        <source type="kaggle">
+            <nameTable>LAW_ENFORCEMENT_BY_CITY_CALIFORNIA</nameTable>
+            <pathFileDest>dataset/source10/ca_law_enforcement_by_city.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>fbi-us/california-crime</nameDataSet>
+                <nameFileData>ca_law_enforcement_by_city.csv</nameFileData>
+            </kaggle>
+        </source>
+
+        <source type="kaggle">
+            <nameTable>CRIMES_BY_POLICE_DEPT_2012_USA</nameTable>
+            <pathFileDest>dataset/source11/LocalCrimeOneYearofData2012.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>mascotinme/population-against-crime</nameDataSet>
+                <nameFileData>LocalCrimeOneYearofData2012.csv</nameFileData>
+            </kaggle>
+        </source>
+
+
+        <source type="kaggle">
+            <nameTable>TERRORISM_PLOTS_2001_PRESENT_USA</nameTable>
+            <pathFileDest>dataset/source12/plots.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>newamerica/terrorist-activity</nameDataSet>
+                <nameFileData>plots.csv</nameFileData>
+            </kaggle>
+        </source>
+
+
+        <source type="kaggle">
+            <nameTable>RIO_DE_JANEIRO_CRIME_RECORDS</nameTable>
+            <pathFileDest>dataset/source13/BaseDPEvolucaoMensalCisp.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>danielesteves/rio-police-records</nameDataSet>
+                <nameFileData>BaseDPEvolucaoMensalCisp.csv</nameFileData>
+            </kaggle>
+        </source>
+
+
+        <source type="kaggle">
+            <nameTable>QUALITY_OF_LIFE_CITY_RANKINGS</nameTable>
+            <pathFileDest>dataset/source14/movehubqualityoflife.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>blitzr/movehub-city-rankings</nameDataSet>
+                <nameFileData>movehubqualityoflife.csv</nameFileData>
+            </kaggle>
+        </source>
+
+        <source type="kaggle">
+            <nameTable>CITIES_FOR_RANKINGS_SOURCE14</nameTable>
+            <pathFileDest>dataset/source14/cities.csv</pathFileDest>
+            <kaggle>
+                <nameDataSet>blitzr/movehub-city-rankings</nameDataSet>
+                <nameFileData>cities.csv</nameFileData>
+            </kaggle>
+        </source>
+    </sources>
+
+    <views>
+        <view>
+            <name>MURDERS</name>
+            <tables>
+                <table>GLOBALTERRORISMDB_0617DIST</table>
+                <table>POLICE_KILLINGS</table>
+                <table>POLICE_DEATHS</table>
+            </tables>
+            <request>
+                CREATE OR REPLACE VIEW MURDERS (iYEAR, COUNTRY, STATE, CITY, ATTACKTYPE) AS
+                SELECT
+                iIYEAR,
+                iCOUNTRY_TXT,
+                iPROVSTATE,
+                iCITY,
+                iATTACKTYPE1_TXT
+                FROM GLOBALTERRORISMDB_0617DIST
+
+                UNION ALL
+
+                SELECT
+                iYEAR,
+                'United States',
+                iSTATE,
+                iCITY,
+                iCAUSE
+                FROM POLICE_KILLINGS
+
+                UNION ALL
+
+                SELECT
+                iYEAR,
+                NULL,
+                iSTATE,
+                NULL,
+                iCAUSE_SHORT
+
+                FROM POLICE_DEATHS;
+            </request>
+        </view>
+        <view>
+            <name>MURDERS_STATISTICS</name>
+            <tables>
+                <table>HATE_CRIMES</table>
+                <table>MURDER_2015_FINAL</table>
+                <table>MURDER_2016_PRELIM</table>
+            </tables>
+            <request>
+                CREATE OR REPLACE VIEW MURDERS_STATISTICS (CITY, STATE, 2014_murders, 2015_murders, 2016_murders, change_2014_2015, change_2015_2016, hate_crimes, avg_hatecrimes)
+                AS SELECT
+                NULL,
+                iSTATE AS state,
+                NULL,
+                NULL,
+                NULL,
+                NULL,
+                NULL,
+                iHATE_CRIMES_PER_100K_SPLC,
+                iAVG_HATECRIMES_PER_100K_FBI
+                FROM HATE_CRIMES
+
+                UNION ALL
+
+                SELECT
+
+                MF.iCITY,
+                MF.iSTATE,
+                i2014_MURDERS,
+                GREATEST(MF.i2015_MURDERS, MP.i2015_MURDERS),
+                i2016_MURDERS,
+                MF.iCHANGE,
+                MP.iCHANGE,
+                NULL,
+                NULL
+                FROM MURDER_2015_FINAL MF, MURDER_2016_PRELIM MP
+                WHERE MF.iSTATE = MP.iSTATE
+                AND MF.iCITY = MP.iCITY
+            </request>
+        </view>
+
+        
+    </views>
+</config>

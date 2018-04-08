@@ -3,6 +3,7 @@ package fr.master1ISI;
 import fr.master1ISI.databaseManager.DatabaseManager;
 import fr.master1ISI.mediator.Mediator;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,8 +16,8 @@ public class App {
 
     private static void initDB() {
         databaseManager = new DatabaseManager("root", null, "ISI");
-        databaseManager.createViewMurders();
-        databaseManager.createViewMurdersStatistics();
+//        databaseManager.createViewMurders();
+//        databaseManager.createViewMurdersStatistics();
     }
 
 
@@ -26,8 +27,6 @@ public class App {
         databaseManager = new DatabaseManager("root", null, "ISI");
 
         mediator = new Mediator(databaseManager);
-
-        //logger.setLevel(Level.OFF);
 
         Scanner scanner = new Scanner(System.in);
 

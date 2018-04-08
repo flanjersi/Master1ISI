@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<!ELEMENT config (sources, views)>
+
+<!ELEMENT sources (source+)>
+<!ELEMENT views (view)*>
+
+<!ELEMENT view (name, tables, request)>
+<!ELEMENT tables (table)+>
+<!ELEMENT table (#PCDATA)>
+<!ELEMENT request (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+
+
+<!ELEMENT source (nameTable, pathFileDest, (github|kaggle))>
+<!ATTLIST source type (github|kaggle)  #REQUIRED>
+
+
+<!ELEMENT nameTable (#PCDATA)>
+<!ELEMENT pathFileDest (#PCDATA)>
+
+
+<!ELEMENT github (ownerName, repoName, pathFileGithub)>
+
+<!ELEMENT ownerName (#PCDATA)>
+<!ELEMENT repoName (#PCDATA)>
+<!ELEMENT pathFileGithub (#PCDATA)>
+
+<!ELEMENT kaggle (nameDataSet, nameFileData)>
+
+<!ELEMENT nameDataSet (#PCDATA)>
+<!ELEMENT nameFileData (#PCDATA)>

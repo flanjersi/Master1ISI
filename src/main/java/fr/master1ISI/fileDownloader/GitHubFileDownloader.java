@@ -1,6 +1,6 @@
 package fr.master1ISI.fileDownloader;
 
-import fr.master1ISI.AppJavaFX;
+import fr.master1ISI.App;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -114,13 +114,13 @@ public class GitHubFileDownloader implements FileDownloader {
             DefaultHttpClient httpClient = new DefaultHttpClient();
 
             String url = makeURLApiTreesGitHub();
-            AppJavaFX.logger.info("Envoie de l'url : " + url + " en cours");
+            App.logger.info("Envoie de l'url : " + url + " en cours");
 
             HttpGet getRequest = buildHTTPRequestGET(url);
 
             HttpResponse response = httpClient.execute(getRequest);
 
-            AppJavaFX.logger.info("Code réponse reçu de l'url " + url + " : " + response.getStatusLine().getStatusCode());
+            App.logger.info("Code réponse reçu de l'url " + url + " : " + response.getStatusLine().getStatusCode());
 
             if (response.getStatusLine().getStatusCode() != 200) {
                 throw new RuntimeException("Failed (" + url + "): HTTP error code : "
@@ -173,11 +173,11 @@ public class GitHubFileDownloader implements FileDownloader {
 
             HttpGet getRequest = buildHTTPRequestGET(url);
 
-            AppJavaFX.logger.info("Envoie de l'url : " + url + " en cours");
+            App.logger.info("Envoie de l'url : " + url + " en cours");
 
             HttpResponse response = httpClient.execute(getRequest);
 
-            AppJavaFX.logger.info("Code réponse reçu de l'url " + url + " : " + response.getStatusLine().getStatusCode());
+            App.logger.info("Code réponse reçu de l'url " + url + " : " + response.getStatusLine().getStatusCode());
 
             if(response.getStatusLine().getStatusCode() == 403){
                 String test = makeURLApiTreesGitHub();
@@ -218,11 +218,11 @@ public class GitHubFileDownloader implements FileDownloader {
 
             HttpGet getRequest = buildHTTPRequestGET(urlBlob);
 
-            AppJavaFX.logger.info("Envoie de l'url : " + urlBlob + " en cours");
+            App.logger.info("Envoie de l'url : " + urlBlob + " en cours");
 
             HttpResponse response = defaultHttpClient.execute(getRequest);
 
-            AppJavaFX.logger.info("Code réponse reçu de l'url " + urlBlob + " : " + response.getStatusLine().getStatusCode());
+            App.logger.info("Code réponse reçu de l'url " + urlBlob + " : " + response.getStatusLine().getStatusCode());
 
            if (response.getStatusLine().getStatusCode() != 200) {
                 throw new RuntimeException("Failed (" + urlBlob + "): HTTP error code : "
@@ -269,11 +269,11 @@ public class GitHubFileDownloader implements FileDownloader {
 
             HttpGet getRequest = buildHTTPRequestGET(url);
 
-            AppJavaFX.logger.info("Envoie de l'url : " + url + " en cours");
+            App.logger.info("Envoie de l'url : " + url + " en cours");
 
             HttpResponse response = httpClient.execute(getRequest);
 
-            AppJavaFX.logger.info("Code réponse reçu de l'url " + url + " : " + response.getStatusLine().getStatusCode());
+            App.logger.info("Code réponse reçu de l'url " + url + " : " + response.getStatusLine().getStatusCode());
 
             if (response.getStatusLine().getStatusCode() != 200) {
                 throw new RuntimeException("Failed (" + url + "): HTTP error code : "

@@ -17,6 +17,9 @@ public class ConfigurationWrapper {
         this.nameTable = file.getName().substring(0, file.getName().indexOf('.'));
     }
 
+    public ConfigurationWrapper() {
+    }
+
     public void setNameTable(String nameTable) {
         this.nameTable = nameTable;
     }
@@ -31,6 +34,10 @@ public class ConfigurationWrapper {
 
     public void setNbRowsData(int nbRowsData) {
         this.nbRowsData = nbRowsData;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
     }
 
     public File getFile() {

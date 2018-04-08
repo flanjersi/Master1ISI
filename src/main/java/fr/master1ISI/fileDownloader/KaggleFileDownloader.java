@@ -1,6 +1,6 @@
 package fr.master1ISI.fileDownloader;
 
-import fr.master1ISI.AppJavaFX;
+import fr.master1ISI.App;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,13 +28,13 @@ public class KaggleFileDownloader implements FileDownloader{
             Runtime runtime = Runtime.getRuntime();
             String cmd = "kaggle datasets download -p " + pathDirectoryDest +  " -f " + nameFileData + " -d " + nameDataSet;
 
-            AppJavaFX.logger.info("Téléchargement du dataset : " + nameDataSet + "/" + nameFileData + " sur kaggle");
+            App.logger.info("Téléchargement du dataset : " + nameDataSet + "/" + nameFileData + " sur kaggle");
 
             Process process = runtime.exec(cmd);
 
             process.waitFor();
 
-            AppJavaFX.logger.info("Fin du téléchargement du dataset : " + nameDataSet + "/" + nameFileData + " sur kaggle");
+            App.logger.info("Fin du téléchargement du dataset : " + nameDataSet + "/" + nameFileData + " sur kaggle");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,13 +59,12 @@ public class KaggleFileDownloader implements FileDownloader{
 
             byte[] buffer = new byte[1024];
 
-            AppJavaFX.logger.info("Récupération du fichier \"" + nameFileData + "\" dans l'archive \"" + fileZip + "\"");
+            App.logger.info("Récupération du fichier \"" + nameFileData + "\" dans l'archive \"" + fileZip + "\"");
+
             ZipInputStream zis = new ZipInputStream(new FileInputStream(fileZip));
             ZipEntry zipEntry = zis.getNextEntry();
 
-            String fileName = zipEntry.getName();
-
-            File newFile = new File(pathDirectoryDest + nameFileData);
+            File newFile = new File(pathDirectoryDest + zipEntry.getName());
 
             FileOutputStream fos = new FileOutputStream(newFile);
 
@@ -78,7 +77,7 @@ public class KaggleFileDownloader implements FileDownloader{
             fos.close();
             zis.closeEntry();
             zis.close();
-            AppJavaFX.logger.info("Récupération terminé du fichier \"" + nameFileData + "\" dans l'archive \"" + fileZip + "\"");
+            App.logger.info("Récupération terminé du fichier \"" + nameFileData + "\" dans l'archive \"" + fileZip + "\"");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -90,7 +89,6 @@ public class KaggleFileDownloader implements FileDownloader{
     @Override
     public boolean download() {
         executeCommandKaggle();
-
 
         unzip();
         return true;
